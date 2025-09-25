@@ -1,5 +1,89 @@
 {
     "manifest_version": 3,
-    "name": "Autofill Assistant",
-    "version": 1.0
+    "name": "Browser Autofill Assistant",
+    "version": "1.0.0",
+    "description": "Intelligent autofill assistant for career and job application sites (Workday, Greenhouse, Lever, iCIMS, Taleo, etc.)",
+    
+    "background": {
+        "service_worker": "src/background/service-worker.js"
+    },
+    
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.workday.com/*",
+                "*://*.greenhouse.io/*",
+                "*://*.lever.co/*",
+                "*://*.icims.com/*",
+                "*://*.taleo.net/*",
+                "*://*myworkdayjobs.com/*",
+                "*://*.bamboohr.com/*",
+                "*://*.jobvite.com/*",
+                "*://*.smartrecruiters.com/*",
+                "*://jobs.*/*",
+                "*://careers.*/*",
+                "*://apply.*/*"
+            ],
+            "js": [
+                "src/lib/storage/storage-utils.js",
+                "src/lib/ats-detection/ats-detector.js",
+                "src/lib/field-mapper/field-mapper.js",
+                "src/lib/answer-library/answer-library.js",
+                "src/content/content-script.js"
+            ],
+            "css": ["src/assets/css/content-styles.css"],
+            "run_at": "document_end"
+        }
+    ],
+    
+    "action": {
+        "default_popup": "src/popup/popup.html",
+        "default_title": "Browser Autofill Assistant",
+        "default_icon": {
+            "16": "src/assets/icons/icon-16.png",
+            "32": "src/assets/icons/icon-32.png",
+            "48": "src/assets/icons/icon-48.png",
+            "128": "src/assets/icons/icon-128.png"
+        }
+    },
+    
+    "icons": {
+        "16": "src/assets/icons/icon-16.png",
+        "32": "src/assets/icons/icon-32.png",
+        "48": "src/assets/icons/icon-48.png",
+        "128": "src/assets/icons/icon-128.png"
+    },
+    
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting",
+        "tabs"
+    ],
+    
+    "host_permissions": [
+        "*://*.workday.com/*",
+        "*://*.greenhouse.io/*",
+        "*://*.lever.co/*",
+        "*://*.icims.com/*",
+        "*://*.taleo.net/*",
+        "*://*myworkdayjobs.com/*",
+        "*://*.bamboohr.com/*",
+        "*://*.jobvite.com/*",
+        "*://*.smartrecruiters.com/*",
+        "*://jobs.*/*",
+        "*://careers.*/*",
+        "*://apply.*/*",
+        "https://generativelanguage.googleapis.com/*"
+    ],
+    
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "src/assets/icons/*",
+                "src/assets/css/*"
+            ],
+            "matches": ["<all_urls>"]
+        }
+    ]
 }
