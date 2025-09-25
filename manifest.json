@@ -16,13 +16,10 @@
                 "*://*.lever.co/*",
                 "*://*.icims.com/*",
                 "*://*.taleo.net/*",
-                "*://*myworkdayjobs.com/*",
+                "*://*.myworkdayjobs.com/*",  
                 "*://*.bamboohr.com/*",
                 "*://*.jobvite.com/*",
-                "*://*.smartrecruiters.com/*",
-                "*://jobs.*/*",
-                "*://careers.*/*",
-                "*://apply.*/*"
+                "*://*.smartrecruiters.com/*"
             ],
             "js": [
                 "src/lib/storage/storage-utils.js",
@@ -38,22 +35,9 @@
     
     "action": {
         "default_popup": "src/popup/popup.html",
-        "default_title": "Browser Autofill Assistant",
-        "default_icon": {
-            "16": "src/assets/icons/icon-16.png",
-            "32": "src/assets/icons/icon-32.png",
-            "48": "src/assets/icons/icon-48.png",
-            "128": "src/assets/icons/icon-128.png"
-        }
+        "default_title": "Browser Autofill Assistant"
     },
-    
-    "icons": {
-        "16": "src/assets/icons/icon-16.png",
-        "32": "src/assets/icons/icon-32.png",
-        "48": "src/assets/icons/icon-48.png",
-        "128": "src/assets/icons/icon-128.png"
-    },
-    
+
     "permissions": [
         "storage",
         "activeTab",
