@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Autofill Assistant</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <img src="../assets/icons/icon-32.png" alt="Autofill Assistant" onerror="this.style.display='none'">
+                <h1>Autofill Assistant</h1>
+            </div>
+            <div class="status-indicator" id="statusIndicator">
+                <span class="status-dot"></span>
+                <span class="status-text">Ready</span>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="actions">Actions</button>
+            <button class="nav-tab" data-tab="profile">Profile</button>
+            <button class="nav-tab" data-tab="templates">Templates</button>
+            <button class="nav-tab" data-tab="settings">Settings</button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content">
+            <!-- Actions Tab -->
+            <div class="tab-content active" id="actionsTab">
+                <div class="page-info" id="pageInfo">
+                    <div class="detected-ats" id="detectedAts">
+                        <span class="ats-label">ATS:</span>
+                        <span class="ats-name" id="atsName">Detecting...</span>
+                        <span class="confidence-badge" id="confidenceBadge">--</span>
+                    </div>
+                    <div class="page-details" id="pageDetails">
+                        <span class="company-name" id="companyName">Unknown Company</span>
+                        <span class="job-title" id="jobTitle">Unknown Position</span>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="fillBtn">
+                        <span class="btn-icon">✍️</span>
+                        <span class="btn-text">Fill Form</span>
+                    </button>
+                    
+                    <button class="btn btn-secondary" id="analyzeBtn">
+                        <span class="btn-icon">🔍</span>
+                        <span class="btn-text">Analyze Fields</span>
+                    </button>
+                    
+                    <button class="btn btn-secondary" id="nextStepBtn">
+                        <span class="btn-icon">➡️</span>
+                        <span class="btn-text">Next Step</span>
+                    </button>
+                    
+                    <button class="btn btn-secondary" id="screenshotBtn">
+                        <span class="btn-icon">📸</span>
+                        <span class="btn-text">Screenshot</span>
+                    </button>
+                </div>
+
+                <div class="field-summary" id="fieldSummary" style="display: none;">
+                    <h3>Detected Fields</h3>
+                    <div class="field-list" id="fieldList"></div>
+                </div>
+
+                <div class="activity-log" id="activityLog">
+                    <h3>Recent Activity</h3>
+                    <div class="log-entries" id="logEntries">
+                        <div class="log-entry">
+                            <span class="log-time">--:--</span>
+                            <span class="log-text">Extension loaded</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Tab -->
+            <div class="tab-content" id="profileTab">
+                <div class="profile-section">
+                    <h3>Personal Information</h3>
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" placeholder="Enter first name">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" placeholder="Enter last name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Enter email address">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" placeholder="Enter phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" placeholder="Enter street address">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" placeholder="City">
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" id="state" placeholder="State">
+                        </div>
+                        <div class="form-group">
+                            <label for="zipCode">ZIP Code</label>
+                            <input type="text" id="zipCode" placeholder="ZIP">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" placeholder="Enter country" value="United States">
+                    </div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Work Information</h3>
+                    <div class="form-group">
+                        <label for="currentTitle">Current Title</label>
+                        <input type="text" id="currentTitle" placeholder="Enter current job title">
+                    </div>
+                    <div class="form-group">
+                        <label for="currentCompany">Current Company</label>
+                        <input type="text" id="currentCompany" placeholder="Enter current company">
+                    </div>
+                    <div class="form-group">
+                        <label for="yearsExperience">Years of Experience</label>
+                        <select id="yearsExperience">
+                            <option value="">Select experience</option>
+                            <option value="0-1">0-1 years</option>
+                            <option value="1-3">1-3 years</option>
+                            <option value="3-5">3-5 years</option>
+                            <option value="5-10">5-10 years</option>
+                            <option value="10+">10+ years</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="desiredSalary">Desired Salary</label>
+                        <input type="text" id="desiredSalary" placeholder="e.g., $75,000 or Negotiable">
+                    </div>
+                    <div class="form-group">
+                        <label for="availableStartDate">Available Start Date</label>
+                        <input type="date" id="availableStartDate">
+                    </div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Documents</h3>
+                    <div class="form-group">
+                        <label for="resumePath">Resume Path</label>
+                        <input type="text" id="resumePath" placeholder="Path to resume file (for reference)">
+                        <small class="form-help">Note: File uploads require manual selection due to browser security restrictions</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="coverLetterPath">Cover Letter Path</label>
+                        <input type="text" id="coverLetterPath" placeholder="Path to cover letter file (for reference)">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" id="saveProfileBtn">Save Profile</button>
+                    <button class="btn btn-secondary" id="clearProfileBtn">Clear All</button>
+                </div>
+            </div>
+
+            <!-- Templates Tab -->
+            <div class="tab-content" id="templatesTab">
+                <div class="templates-header">
+                    <h3>Answer Templates</h3>
+                    <button class="btn btn-small" id="addTemplateBtn">+ Add Template</button>
+                </div>
+
+                <div class="template-list" id="templateList">
+                    <!-- Templates will be loaded dynamically -->
+                </div>
+
+                <div class="template-editor" id="templateEditor" style="display: none;">
+                    <div class="editor-header">
+                        <h4 id="editorTitle">Edit Template</h4>
+                        <button class="btn btn-small btn-secondary" id="closeEditorBtn">Close</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="templateKey">Template Name</label>
+                        <input type="text" id="templateKey" placeholder="Enter template name">
+                    </div>
+                    <div class="form-group">
+                        <label for="templateCategory">Category</label>
+                        <select id="templateCategory">
+                            <option value="motivation">Motivation</option>
+                            <option value="qualifications">Qualifications</option>
+                            <option value="goals">Goals</option>
+                            <option value="strengths">Strengths</option>
+                            <option value="weaknesses">Weaknesses</option>
+                            <option value="work_style">Work Style</option>
+                            <option value="teamwork">Teamwork</option>
+                            <option value="leadership">Leadership</option>
+                            <option value="problem_solving">Problem Solving</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="templateContent">Template Content</label>
+                        <textarea id="templateContent" rows="6" placeholder="Enter template content. Use {variable} for placeholders."></textarea>
+                        <small class="form-help">Use curly braces for variables: {company}, {position}, {field}, etc.</small>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" id="saveTemplateBtn">Save Template</button>
+                        <button class="btn btn-danger" id="deleteTemplateBtn" style="display: none;">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-content" id="settingsTab">
+                <div class="settings-section">
+                    <h3>General Settings</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="autoFillEnabled">
+                            <span class="checkmark"></span>
+                            Enable Auto-fill
+                        </label>
+                        <small class="setting-help">Automatically fill detected form fields</small>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="screenshotEnabled">
+                            <span class="checkmark"></span>
+                            Capture Screenshots
+                        </label>
+                        <small class="setting-help">Automatically capture screenshots after form submission</small>
+                    </div>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="debugMode">
+                            <span class="checkmark"></span>
+                            Debug Mode
+                        </label>
+                        <small class="setting-help">Show detailed logging information</small>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Timing Settings</h3>
+                    <div class="form-group">
+                        <label for="fillDelay">Fill Delay (ms)</label>
+                        <input type="number" id="fillDelay" min="100" max="2000" step="100" value="500">
+                        <small class="form-help">Delay between filling form fields (100-2000ms)</small>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>AI Integration</h3>
+                    <div class="form-group">
+                        <label for="geminiApiKey">Gemini API Key</label>
+                        <input type="password" id="geminiApiKey" placeholder="Enter your Gemini API key">
+                        <small class="form-help">Optional: Use your own API key for enhanced field detection</small>
+                    </div>
+                    <div class="ai-usage" id="aiUsage">
+                        <h4>API Usage</h4>
+                        <div class="usage-stats" id="usageStats">
+                            <div class="usage-item">
+                                <span class="usage-label">Today:</span>
+                                <span class="usage-value" id="dailyUsage">0 / 1500</span>
+                            </div>
+                            <div class="usage-item">
+                                <span class="usage-label">Cache Hits:</span>
+                                <span class="usage-value" id="cacheHits">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Data Management</h3>
+                    <div class="form-actions">
+                        <button class="btn btn-secondary" id="exportDataBtn">Export Data</button>
+                        <button class="btn btn-secondary" id="importDataBtn">Import Data</button>
+                        <button class="btn btn-danger" id="clearAllDataBtn">Clear All Data</button>
+                    </div>
+                    <div class="storage-info" id="storageInfo">
+                        <h4>Storage Usage</h4>
+                        <div class="storage-bar">
+                            <div class="storage-used" id="storageUsed" style="width: 0%"></div>
+                        </div>
+                        <small class="storage-text" id="storageText">0 MB used of 5 MB available</small>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" id="saveSettingsBtn">Save Settings</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-info">
+                <span class="version">v1.0.0</span>
+                <span class="separator">•</span>
+                <a href="#" class="footer-link" id="helpLink">Help</a>
+                <span class="separator">•</span>
+                <a href="#" class="footer-link" id="feedbackLink">Feedback</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Hidden file input for data import -->
+    <input type="file" id="importFileInput" style="display: none;" accept=".json">
+
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Processing...</div>
+    </div>
+
+    <!-- Toast notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="popup.js"></script>
+</body>
+</html>

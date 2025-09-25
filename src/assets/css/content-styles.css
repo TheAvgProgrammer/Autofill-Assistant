@@ -1,0 +1,596 @@
+/**
+ * Content Script Styles for Browser Autofill Assistant
+ * 
+ * Styles for elements injected into web pages
+ * Designed to be non-intrusive and visually consistent
+ * 
+ * @author Browser Autofill Assistant Team
+ * @version 1.0.0
+ */
+
+/* Floating Action Button */
+#autofill-fab {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    width: 50px !important;
+    height: 50px !important;
+    background: linear-gradient(135deg, #4285f4, #34a853) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    z-index: 2147483647 !important; /* Maximum z-index */
+    font-size: 20px !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+}
+
+#autofill-fab:hover {
+    transform: scale(1.1) !important;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.4) !important;
+}
+
+#autofill-fab:active {
+    transform: scale(0.95) !important;
+    transition: transform 0.1s !important;
+}
+
+/* Quick Action Menu */
+#autofill-quick-menu {
+    position: fixed !important;
+    bottom: 80px !important;
+    right: 20px !important;
+    z-index: 2147483646 !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    animation: autofill-menu-slide-in 0.3s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
+}
+
+@keyframes autofill-menu-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+#autofill-quick-menu > div {
+    background: white !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important;
+    padding: 8px !important;
+    min-width: 200px !important;
+    border: 1px solid rgba(0,0,0,0.1) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+.autofill-menu-item {
+    padding: 12px 16px !important;
+    cursor: pointer !important;
+    border-radius: 8px !important;
+    margin: 2px 0 !important;
+    transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #333 !important;
+    text-decoration: none !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+
+.autofill-menu-item:hover {
+    background: rgba(66, 133, 244, 0.08) !important;
+    color: #4285f4 !important;
+    transform: translateX(2px) !important;
+}
+
+.autofill-menu-item:active {
+    background: rgba(66, 133, 244, 0.16) !important;
+    transform: translateX(1px) !important;
+}
+
+/* Field Highlighting */
+.autofill-field-highlight {
+    animation: autofill-field-glow 2s ease-in-out !important;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
+}
+
+@keyframes autofill-field-glow {
+    0% {
+        box-shadow: 0 0 0 2px rgba(52, 168, 83, 0.3) !important;
+        border-color: #34a853 !important;
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(52, 168, 83, 0.6) !important;
+        border-color: #34a853 !important;
+    }
+    100% {
+        box-shadow: 0 0 0 2px rgba(52, 168, 83, 0.3) !important;
+        border-color: #34a853 !important;
+    }
+}
+
+/* Progress Indicator */
+.autofill-progress {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    background: white !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2) !important;
+    padding: 16px 20px !important;
+    z-index: 2147483645 !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #333 !important;
+    border: 1px solid rgba(0,0,0,0.1) !important;
+    min-width: 200px !important;
+    animation: autofill-progress-slide-in 0.3s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
+}
+
+@keyframes autofill-progress-slide-in {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.autofill-progress-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-bottom: 8px !important;
+}
+
+.autofill-progress-icon {
+    font-size: 16px !important;
+}
+
+.autofill-progress-title {
+    font-weight: 600 !important;
+    color: #4285f4 !important;
+}
+
+.autofill-progress-bar {
+    width: 100% !important;
+    height: 4px !important;
+    background: #e0e0e0 !important;
+    border-radius: 2px !important;
+    overflow: hidden !important;
+    margin-bottom: 8px !important;
+}
+
+.autofill-progress-fill {
+    height: 100% !important;
+    background: linear-gradient(90deg, #4285f4, #34a853) !important;
+    border-radius: 2px !important;
+    transition: width 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
+}
+
+.autofill-progress-text {
+    font-size: 12px !important;
+    color: #666 !important;
+    text-align: center !important;
+}
+
+/* File Upload Prompt */
+.autofill-file-prompt {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background: white !important;
+    border-radius: 12px !important;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.3) !important;
+    padding: 24px !important;
+    z-index: 2147483644 !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    border: 1px solid rgba(0,0,0,0.1) !important;
+    max-width: 400px !important;
+    width: 90% !important;
+    animation: autofill-modal-appear 0.3s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
+}
+
+@keyframes autofill-modal-appear {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.autofill-file-prompt h3 {
+    margin: 0 0 12px 0 !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #333 !important;
+}
+
+.autofill-file-prompt p {
+    margin: 0 0 20px 0 !important;
+    font-size: 14px !important;
+    color: #666 !important;
+    line-height: 1.4 !important;
+}
+
+.autofill-file-prompt button {
+    background: #4285f4 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: background-color 0.2s !important;
+    font-family: inherit !important;
+}
+
+.autofill-file-prompt button:hover {
+    background: #3367d6 !important;
+}
+
+/* Notification Toast */
+.autofill-toast {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    background: #333 !important;
+    color: white !important;
+    padding: 12px 20px !important;
+    border-radius: 8px !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    z-index: 2147483643 !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3) !important;
+    max-width: 300px !important;
+    animation: autofill-toast-slide-in 0.3s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
+}
+
+.autofill-toast.success {
+    background: #34a853 !important;
+}
+
+.autofill-toast.warning {
+    background: #fbbc04 !important;
+    color: #333 !important;
+}
+
+.autofill-toast.error {
+    background: #ea4335 !important;
+}
+
+@keyframes autofill-toast-slide-in {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Step Navigator */
+.autofill-step-navigator {
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: white !important;
+    border-radius: 24px !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2) !important;
+    padding: 12px 20px !important;
+    z-index: 2147483642 !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    border: 1px solid rgba(0,0,0,0.1) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    animation: autofill-navigator-slide-up 0.3s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
+}
+
+@keyframes autofill-navigator-slide-up {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.autofill-step-navigator button {
+    background: #4285f4 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 16px !important;
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    font-family: inherit !important;
+}
+
+.autofill-step-navigator button:hover {
+    background: #3367d6 !important;
+    transform: translateY(-1px) !important;
+}
+
+.autofill-step-navigator button:disabled {
+    background: #dadce0 !important;
+    color: #666 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+.autofill-step-info {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #333 !important;
+}
+
+/* Loading Spinner */
+.autofill-loading {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-radius: 12px !important;
+    padding: 32px !important;
+    z-index: 2147483641 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important;
+    border: 1px solid rgba(0,0,0,0.1) !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+.autofill-spinner {
+    width: 32px !important;
+    height: 32px !important;
+    border: 3px solid rgba(66, 133, 244, 0.3) !important;
+    border-top: 3px solid #4285f4 !important;
+    border-radius: 50% !important;
+    animation: autofill-spin 1s linear infinite !important;
+}
+
+@keyframes autofill-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.autofill-loading-text {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #333 !important;
+}
+
+/* Field Labels and Indicators */
+.autofill-field-label {
+    position: absolute !important;
+    top: -8px !important;
+    left: 8px !important;
+    background: #4285f4 !important;
+    color: white !important;
+    padding: 2px 6px !important;
+    border-radius: 3px !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    z-index: 1000 !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s !important;
+}
+
+.autofill-field-highlight .autofill-field-label {
+    opacity: 1 !important;
+}
+
+/* Confidence Indicator */
+.autofill-confidence-indicator {
+    position: absolute !important;
+    top: -8px !important;
+    right: 8px !important;
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 50% !important;
+    z-index: 1001 !important;
+    pointer-events: none !important;
+}
+
+.autofill-confidence-high {
+    background: #34a853 !important;
+}
+
+.autofill-confidence-medium {
+    background: #fbbc04 !important;
+}
+
+.autofill-confidence-low {
+    background: #ea4335 !important;
+}
+
+/* Form Analysis Overlay */
+.autofill-analysis-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.1) !important;
+    z-index: 2147483640 !important;
+    pointer-events: none !important;
+    animation: autofill-overlay-fade-in 0.3s !important;
+}
+
+@keyframes autofill-overlay-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #autofill-fab {
+        bottom: 80px !important;
+        right: 16px !important;
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 18px !important;
+    }
+    
+    #autofill-quick-menu {
+        bottom: 130px !important;
+        right: 16px !important;
+    }
+    
+    #autofill-quick-menu > div {
+        min-width: 180px !important;
+    }
+    
+    .autofill-progress {
+        top: 16px !important;
+        right: 16px !important;
+        left: 16px !important;
+        min-width: auto !important;
+    }
+    
+    .autofill-file-prompt {
+        width: 95% !important;
+        padding: 20px !important;
+    }
+    
+    .autofill-step-navigator {
+        bottom: 140px !important;
+        left: 16px !important;
+        right: 16px !important;
+        transform: none !important;
+        justify-content: space-between !important;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    #autofill-quick-menu > div {
+        background: #2d2d2d !important;
+        border-color: rgba(255,255,255,0.1) !important;
+    }
+    
+    .autofill-menu-item {
+        color: #e0e0e0 !important;
+    }
+    
+    .autofill-menu-item:hover {
+        background: rgba(66, 133, 244, 0.2) !important;
+        color: #4285f4 !important;
+    }
+    
+    .autofill-progress {
+        background: #2d2d2d !important;
+        color: #e0e0e0 !important;
+        border-color: rgba(255,255,255,0.1) !important;
+    }
+    
+    .autofill-progress-text {
+        color: #a0a0a0 !important;
+    }
+    
+    .autofill-file-prompt {
+        background: #2d2d2d !important;
+        border-color: rgba(255,255,255,0.1) !important;
+    }
+    
+    .autofill-file-prompt h3 {
+        color: #e0e0e0 !important;
+    }
+    
+    .autofill-file-prompt p {
+        color: #a0a0a0 !important;
+    }
+    
+    .autofill-step-navigator {
+        background: #2d2d2d !important;
+        border-color: rgba(255,255,255,0.1) !important;
+    }
+    
+    .autofill-step-info {
+        color: #e0e0e0 !important;
+    }
+    
+    .autofill-loading {
+        background: rgba(45, 45, 45, 0.95) !important;
+        border-color: rgba(255,255,255,0.1) !important;
+    }
+    
+    .autofill-loading-text {
+        color: #e0e0e0 !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .autofill-field-highlight {
+        border-width: 3px !important;
+    }
+    
+    .autofill-confidence-indicator {
+        border: 2px solid white !important;
+    }
+    
+    #autofill-fab {
+        border: 2px solid white !important;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Print Styles */
+@media print {
+    #autofill-fab,
+    #autofill-quick-menu,
+    .autofill-progress,
+    .autofill-file-prompt,
+    .autofill-toast,
+    .autofill-step-navigator,
+    .autofill-loading,
+    .autofill-analysis-overlay {
+        display: none !important;
+    }
+}
